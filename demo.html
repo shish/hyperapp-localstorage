@@ -11,30 +11,30 @@ import { LocalStorageLoader, LocalStorageSaver } from "./src/index.js";
 // Create the app()
 app({
     init: [
-		{counter: 1},
-		// When the app first loads, look at localstorage for a key
-		// named "saved_counter", and put that value into state.counter
-		LocalStorageLoader("saved_counter", (state, val) => ({...state, counter: val})),
-	],
-	// Generate some HTML which shows the counter, and a button which
-	// will increment the counter when clicked
+        {counter: 1},
+        // When the app first loads, look at localstorage for a key
+        // named "saved_counter", and put that value into state.counter
+        LocalStorageLoader("saved_counter", (state, val) => ({...state, counter: val})),
+    ],
+    // Generate some HTML which shows the counter, and a button which
+    // will increment the counter when clicked
     view: (state) => (
-		h("main", {}, [
-			h("h1", {}, text(`The button was clicked ${state.counter} times`)),
-			h("p", {},
-				h(
-					"button",
-					{onclick: (state) => ({...state, counter: state.counter+1})},
-					text(`I AM A BUTTON`)
-				),
-			),
-			h("p", {}, text("(Try refreshing the page and seeing if it sticks)"))
-		])
-	),
+        h("main", {}, [
+            h("h1", {}, text(`The button was clicked ${state.counter} times`)),
+            h("p", {},
+                h(
+                    "button",
+                    {onclick: (state) => ({...state, counter: state.counter+1})},
+                    text(`I AM A BUTTON`)
+                ),
+            ),
+            h("p", {}, text("(Try refreshing the page and seeing if it sticks)"))
+        ])
+    ),
     subscriptions: state => [
-		// Whenever state.counter changes, save it into localstorage
-		// with the name "saved_counter"
-		LocalStorageSaver("saved_counter", state.counter),
+        // Whenever state.counter changes, save it into localstorage
+        // with the name "saved_counter"
+        LocalStorageSaver("saved_counter", state.counter),
     ],
     node: document.getElementById("app"),
 });
