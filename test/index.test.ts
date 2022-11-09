@@ -7,14 +7,15 @@ function dispatch(action, data) {
 // RAF is used as "don't do this immediately, but do it at
 // the next opportunity". For sake of testing we can assume
 // it works immediately.
-window.requestAnimationFrame = function(x) {
-  x();
+window.requestAnimationFrame = function (x): number {
+  x(0);
+  return 0;
 };
 
 describe("LocalStorageLoader", () => {
-  it("Should call the callback if value exists", done => {
+  it("Should call the callback if value exists", (done) => {
     localStorage.setItem("test", '{"foo":"bar"}');
-    let lsl = LocalStorageLoader("test", function(state, val) {
+    let lsl = LocalStorageLoader("test", function (state, val) {
       done();
       return { ...state, test: val };
     });
@@ -22,7 +23,7 @@ describe("LocalStorageLoader", () => {
   });
   it("Should do nothing if the value is missing", () => {
     localStorage.removeItem("test");
-    LocalStorageLoader("test", function(state, val) {
+    LocalStorageLoader("test", function (state, val) {
       // TODO: test that this isn't called?
       return { ...state, test: val };
     });
