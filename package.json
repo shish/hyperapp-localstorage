@@ -1,6 +1,6 @@
 {
   "name": "@shish2k/hyperapp-localstorage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Functions to keep app state in sync with localstorage",
   "keywords": [
     "hyperapp",
@@ -18,7 +18,7 @@
   "module": "dist/module.js",
   "types": "dist/types.d.ts",
   "peerDependencies": {
-    "hyperapp": "^2.0.0"
+    "hyperapp": "^2.0.22"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",

@@ -15,7 +15,7 @@ window.requestAnimationFrame = function (x): number {
 describe("LocalStorageLoader", () => {
   it("Should call the callback if value exists", (done) => {
     localStorage.setItem("test", '{"foo":"bar"}');
-    let lsl = LocalStorageLoader("test", function (state, val) {
+    let lsl = LocalStorageLoader("test", function (state: object, val) {
       done();
       return { ...state, test: val };
     });
@@ -23,7 +23,7 @@ describe("LocalStorageLoader", () => {
   });
   it("Should do nothing if the value is missing", () => {
     localStorage.removeItem("test");
-    LocalStorageLoader("test", function (state, val) {
+    LocalStorageLoader("test", function (state: object, val) {
       // TODO: test that this isn't called?
       return { ...state, test: val };
     });

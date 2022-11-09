@@ -1,11 +1,20 @@
-import type { Subscription } from "hyperapp";
+import type {
+  Dispatch,
+  Dispatchable,
+  Effect,
+  Subscription,
+  Unsubscribe,
+} from "hyperapp";
 
-type LocalStorageLoaderProps = {
+type LocalStorageLoaderProps<S> = {
   key: string;
-  action: CallableFunction;
+  action: Dispatchable<S>;
 };
 
-function _stateLoader(dispatch, props: LocalStorageLoaderProps) {
+function _stateLoader<S>(
+  dispatch: Dispatch<S>,
+  props: LocalStorageLoaderProps<S>
+) {
   let data = localStorage.getItem(props.key);
   if (!data) return;
   data = JSON.parse(data);
@@ -13,9 +22,9 @@ function _stateLoader(dispatch, props: LocalStorageLoaderProps) {
 }
 
 export function LocalStorageLoader<S>(
-  key,
-  action: CallableFunction
-): Subscription<S, LocalStorageLoaderProps> {
+  key: string,
+  action: Dispatchable<S>
+): Effect<S> {
   return [_stateLoader, { key, action }];
 }
 
@@ -24,7 +33,10 @@ type LocalStorageSaverProps = {
   value: any;
 };
 
-function _stateSaver(dispatch, props: LocalStorageSaverProps) {
+function _stateSaver<S>(
+  dispatch: Dispatch<S>,
+  props: LocalStorageSaverProps
+): Unsubscribe {
   requestAnimationFrame((_) =>
     localStorage.setItem(props.key, JSON.stringify(props.value))
   );
